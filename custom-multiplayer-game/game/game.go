@@ -1,25 +1,52 @@
 package game
 
 import (
+	"image/color"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // Game implements ebiten.Game interface.
-type Game struct{}
+type Game struct {
+	gameObjectManager *GameObjectManager
+	initialized       bool
+}
+
+// Initialize sets up the game objects
+func (g *Game) Initialize() {
+	if g.initialized {
+		return
+	}
+
+	g.gameObjectManager = NewGameObjectManager()
+	
+	// Create a player at the center of the screen
+	player := NewPlayer(160, 120, 2.0, 20, color.RGBA{255, 0, 0, 255}) // Red square
+	g.gameObjectManager.AddGameObject(player)
+	
+	g.initialized = true
+}
 
 // Update proceeds the game state.
 // Update is called every tick (1/60 [s] by default).
 func (g *Game) Update() error {
-	// Write your game's logical update.
-	return nil
+	g.Initialize()
+	
+	// Update all game objects automatically
+	return g.gameObjectManager.UpdateAll()
 }
 
 // Draw draws the game screen.
 // Draw is called every frame (typically 1/60[s] for 60Hz display).
 func (g *Game) Draw(screen *ebiten.Image) {
-	// Write your game's rendering.
+	g.Initialize()
+	
+	// Clear screen with black background
+	screen.Fill(color.RGBA{0, 0, 0, 255})
+	
+	// Draw all game objects automatically
+	g.gameObjectManager.DrawAll(screen)
 }
 
 // Layout takes the outside size (e.g., the window size) and returns the (logical) screen size.
