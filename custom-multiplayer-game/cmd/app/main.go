@@ -1,7 +1,8 @@
 package main
 
-import "fmt"
+import "custom-multiplayer-game/game"
 
 func main() {
-	fmt.Println("Hello world!")
+	game := game.StartGame()
+	game.Update()
 }
