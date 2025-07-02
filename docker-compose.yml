@@ -1,0 +1,14 @@
+
+services:
+  multiplayer-server:
+    build: ./custom-multiplayer-server
+    ports:
+      - "8080:8080/udp"
+    container_name: multiplayer-server
+    restart: unless-stopped
+    networks:
+      - multiplayer-network
+
+networks:
+  multiplayer-network:
+    driver: bridge
