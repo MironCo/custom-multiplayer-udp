@@ -7,12 +7,15 @@ import (
 )
 
 type ServerHandler struct {
-	address    *net.UDPAddr
-	connection *net.UDPConn
+	address          *net.UDPAddr
+	connection       *net.UDPConn
+	WebsocketHandler *WebsocketHandler
 }
 
-func CreateServerHandler() *ServerHandler {
-	return &ServerHandler{}
+func CreateServerHandler(websocketHandler *WebsocketHandler) *ServerHandler {
+	return &ServerHandler{
+		WebsocketHandler: websocketHandler,
+	}
 }
 
 func (h *ServerHandler) Start() {

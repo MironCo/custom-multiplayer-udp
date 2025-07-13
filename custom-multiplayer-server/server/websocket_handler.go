@@ -5,13 +5,13 @@ import (
 	"custom-multiplayer-server/types"
 	"encoding/json"
 	"log"
+	"net"
 	"net/http"
 
 	"github.com/gorilla/websocket"
 )
 
 type WebsocketHandler struct {
-	connection  *websocket.Conn
 	GameHandler *game.GameHandler
 }
 
@@ -22,14 +22,14 @@ func CreateWebsocketHandler(gameHandler *game.GameHandler) *WebsocketHandler {
 func (h *WebsocketHandler) HandleWebsocket(w http.ResponseWriter, r *http.Request) {
 	upgrader := websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}
 	var err error
-	h.connection, err = upgrader.Upgrade(w, r, nil)
+	connection, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Upgrade error: ", err)
 	}
-	defer h.Close()
+	defer connection.Close()
 
 	for {
-		_, message, err := h.connection.ReadMessage()
+		_, message, err := connection.ReadMessage()
 		if err != nil {
 			log.Println("Read error: ", err)
 		}
@@ -42,13 +42,19 @@ func (h *WebsocketHandler) HandleWebsocket(w http.ResponseWriter, r *http.Reques
 
 		switch msg.MessageType {
 		case "join_lobby":
-			// do seomthing here
+			var joinMessage types.JoinLobbyMessage
+			if err := json.Unmarshal(msg.MessageData, &joinMessage); err != nil {
+				log.Println("Error parsing join_lobby data:", err)
+				continue
+			}
+			udpAddr, err := net.ResolveUDPAddr("udp", joinMessage.UDPAddress)
+			if err != nil {
+				continue
+			}
+
+			h.GameHandler.AddPlayerToRandomGame(udpAddr)
 		case "leave_lobby":
 			// do soemthing here
 		}
 	}
-}
-
-func (h *WebsocketHandler) Close() {
-	h.connection.Close()
 }
