@@ -9,7 +9,7 @@ import (
 )
 
 type NetworkClient struct {
-	conn   *websocket.Conn
+	conn      *websocket.Conn
 	connected bool
 }
 
@@ -26,17 +26,17 @@ func (nc *NetworkClient) ConnectToServer(serverURL string) error {
 	}
 
 	log.Printf("Connecting to server at %s", u.String())
-	
+
 	// TODO: Implement actual websocket connection
 	// conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	// if err != nil {
 	//     return fmt.Errorf("failed to connect: %v", err)
 	// }
-	
+
 	// nc.conn = conn
 	nc.connected = true
 	log.Println("Successfully connected to server (simulated)")
-	
+
 	return nil
 }
 
@@ -56,7 +56,7 @@ func (nc *NetworkClient) SendMessage(message []byte) error {
 	if !nc.connected || nc.conn == nil {
 		return fmt.Errorf("not connected to server")
 	}
-	
+
 	// TODO: Implement actual message sending
 	// return nc.conn.WriteMessage(websocket.TextMessage, message)
 	return nil

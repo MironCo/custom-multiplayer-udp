@@ -1,8 +1,6 @@
 package types
 
-import (
-	"encoding/json"
-)
+import "encoding/json"
 
 type WebsocketMessage struct {
 	MessageType string          `json:"message_type"`
