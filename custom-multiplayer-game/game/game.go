@@ -20,11 +20,11 @@ func (g *Game) Initialize() {
 	}
 
 	g.gameObjectManager = NewGameObjectManager()
-	
+
 	// Create a player at the center of the screen
 	player := NewPlayer(160, 120, 2.0, 20, color.RGBA{255, 0, 0, 255}) // Red square
 	g.gameObjectManager.AddGameObject(player)
-	
+
 	g.initialized = true
 }
 
@@ -32,7 +32,7 @@ func (g *Game) Initialize() {
 // Update is called every tick (1/60 [s] by default).
 func (g *Game) Update() error {
 	g.Initialize()
-	
+
 	// Update all game objects automatically
 	return g.gameObjectManager.UpdateAll()
 }
@@ -41,10 +41,10 @@ func (g *Game) Update() error {
 // Draw is called every frame (typically 1/60[s] for 60Hz display).
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.Initialize()
-	
+
 	// Clear screen with black background
 	screen.Fill(color.RGBA{0, 0, 0, 255})
-	
+
 	// Draw all game objects automatically
 	g.gameObjectManager.DrawAll(screen)
 }

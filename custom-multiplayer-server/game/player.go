@@ -1,9 +1,23 @@
 package game
 
-import "net"
+import (
+	"net"
+
+	"github.com/google/uuid"
+)
 
 type Player struct {
-	address net.UDPAddr
-	X       float32
-	Y       float32
+	PlayerUUID string      `json:"player_uuid"`
+	Address    net.UDPAddr `json:"udp_address"`
+	X          float32     `json:"x_position"`
+	Y          float32     `json:"y_position"`
+}
+
+func CreateNewPlayer(address *net.UDPAddr) *Player {
+	return &Player{
+		PlayerUUID: uuid.NewString(),
+		Address:    *address,
+		X:          0,
+		Y:          0,
+	}
 }
