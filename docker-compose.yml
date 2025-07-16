@@ -4,6 +4,7 @@ services:
     build: ./custom-multiplayer-server
     ports:
       - "8080:8080/udp"
+      - "8081:8081"
     container_name: multiplayer-server
     restart: unless-stopped
     networks:

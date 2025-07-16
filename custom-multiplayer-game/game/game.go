@@ -45,7 +45,7 @@ func (g *Game) Initialize() {
 
 func (g *Game) JoinServer() {
 	// Connect to server (placeholder URL)
-	err := g.networkClient.ConnectToServer("ws://localhost:8080/ws")
+	err := g.networkClient.ConnectToServer()
 	if err != nil {
 		log.Printf("Failed to connect to server: %v", err)
 		return
@@ -54,8 +54,8 @@ func (g *Game) JoinServer() {
 	g.state = StatePlaying
 
 	// Create a player at the center of the screen when joining
-	player := NewPlayer(160, 120, 2.0, 20, color.RGBA{255, 0, 0, 255}) // Red square
-	g.gameObjectManager.AddGameObject(player)
+	//player := NewPlayer(160, 120, 2.0, 20, color.RGBA{255, 0, 0, 255}) // Red square
+	//g.gameObjectManager.AddGameObject(player)
 }
 
 // Update proceeds the game state.

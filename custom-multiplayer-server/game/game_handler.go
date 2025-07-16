@@ -27,11 +27,19 @@ func (h *GameHandler) CreateNewGameIntoHandler() {
 }
 
 func (h *GameHandler) AddPlayerToRandomGame(address *net.UDPAddr) {
-	randomKey := randomKeyFromMap(h.games)
-
 	h.mutex.Lock()
+	defer h.mutex.Unlock()
+
+	if len(h.games) == 0 {
+		// Create a new game if none exist
+		newGame := CreateNewGame()
+		h.games[newGame.RoomID] = newGame
+		newGame.AddPlayer(address)
+		return
+	}
+
+	randomKey := randomKeyFromMap(h.games)
 	h.games[randomKey].AddPlayer(address)
-	h.mutex.Unlock()
 }
 
 // helper function

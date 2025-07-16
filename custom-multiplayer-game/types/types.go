@@ -2,6 +2,10 @@ package types
 
 import "encoding/json"
 
+const (
+	MESSAGE_TYPE_JOIN = "join_lobby"
+)
+
 type WebsocketMessage struct {
 	MessageType string          `json:"message_type"`
 	MessageData json.RawMessage `json:"message_data"`

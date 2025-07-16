@@ -16,7 +16,9 @@ type WebsocketHandler struct {
 }
 
 func CreateWebsocketHandler(gameHandler *game.GameHandler) *WebsocketHandler {
-	return &WebsocketHandler{}
+	return &WebsocketHandler{
+		GameHandler: gameHandler,
+	}
 }
 
 func (h *WebsocketHandler) HandleWebsocket(w http.ResponseWriter, r *http.Request) {
