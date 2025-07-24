@@ -20,9 +20,10 @@ func CreateNewGame() *Game {
 	}
 }
 
-func (h *Game) AddPlayer(address *net.UDPAddr) {
+func (h *Game) AddPlayer(address *net.UDPAddr) *Player {
 	h.mutex.Lock()
 	newPlayer := CreateNewPlayer(address)
 	h.Players[newPlayer.PlayerUUID] = newPlayer
 	h.mutex.Unlock()
+	return newPlayer
 }

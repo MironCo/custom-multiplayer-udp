@@ -70,7 +70,6 @@ func (nc *NetworkClient) ConnectToWebsocketServer() error {
 func (nc *NetworkClient) ConnectToServer() error {
 	nc.ConnectToWebsocketServer()
 	nc.ConnectToUDPServer()
-	nc.JoinGame()
 
 	return nil
 }

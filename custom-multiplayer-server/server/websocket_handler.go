@@ -4,6 +4,7 @@ import (
 	"custom-multiplayer-server/game"
 	"custom-multiplayer-server/types"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -45,12 +46,15 @@ func (h *WebsocketHandler) HandleWebsocket(w http.ResponseWriter, r *http.Reques
 		switch msg.MessageType {
 		case "join_lobby":
 			var joinMessage types.JoinLobbyMessage
+
 			if err := json.Unmarshal(msg.MessageData, &joinMessage); err != nil {
 				log.Println("Error parsing join_lobby data:", err)
 				continue
 			}
+
 			udpAddr, err := net.ResolveUDPAddr("udp", joinMessage.UDPAddress)
 			if err != nil {
+				fmt.Println("Issue resolving UDP address")
 				continue
 			}
 

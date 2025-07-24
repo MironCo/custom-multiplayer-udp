@@ -14,10 +14,11 @@ type Player struct {
 }
 
 func CreateNewPlayer(address *net.UDPAddr) *Player {
-	return &Player{
+	player := &Player{
 		PlayerUUID: uuid.NewString(),
 		Address:    *address,
 		X:          0,
 		Y:          0,
 	}
+	return player
 }

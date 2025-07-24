@@ -1,6 +1,7 @@
 package game
 
 import (
+	"fmt"
 	"math/rand/v2"
 	"net"
 	"sync"
@@ -34,12 +35,15 @@ func (h *GameHandler) AddPlayerToRandomGame(address *net.UDPAddr) {
 		// Create a new game if none exist
 		newGame := CreateNewGame()
 		h.games[newGame.RoomID] = newGame
-		newGame.AddPlayer(address)
+		newPlayer := newGame.AddPlayer(address)
+		fmt.Printf("Added Player To Server - Player Id: %s\n", newPlayer.PlayerUUID)
 		return
 	}
 
 	randomKey := randomKeyFromMap(h.games)
-	h.games[randomKey].AddPlayer(address)
+	newPlayer := h.games[randomKey].AddPlayer(address)
+
+	fmt.Printf("Added Player To Server - Player Id: %s\n", newPlayer.PlayerUUID)
 }
 
 // helper function

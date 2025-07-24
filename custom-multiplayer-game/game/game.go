@@ -51,11 +51,18 @@ func (g *Game) JoinServer() {
 		return
 	}
 
+	err = g.networkClient.JoinGame()
+	if err != nil {
+
+	}
 	g.state = StatePlaying
 
+}
+
+func (g *Game) AddSoloPlayer() {
 	// Create a player at the center of the screen when joining
-	//player := NewPlayer(160, 120, 2.0, 20, color.RGBA{255, 0, 0, 255}) // Red square
-	//g.gameObjectManager.AddGameObject(player)
+	player := NewPlayer(160, 120, 2.0, 20, color.RGBA{255, 0, 0, 255}) // Red square
+	g.gameObjectManager.AddGameObject(player)
 }
 
 // Update proceeds the game state.

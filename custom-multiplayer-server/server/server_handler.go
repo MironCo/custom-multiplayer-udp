@@ -46,7 +46,7 @@ func (h *ServerHandler) ReceiveMessages(buffer []byte) {
 		}
 
 		message := string(buffer[:n])
-		fmt.Println("Received from %s: %s\n", clientAddress, message)
+		fmt.Printf("Received from %s: %s\n", clientAddress, message)
 
 		response := fmt.Sprintf("Echo: %s", message)
 		_, err = h.connection.WriteToUDP([]byte(response), clientAddress)
